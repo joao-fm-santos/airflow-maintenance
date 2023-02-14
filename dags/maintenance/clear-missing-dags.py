@@ -5,7 +5,7 @@ This ensures that the DAG table is clean with only active DAGs.
 """
 from datetime import timedelta
 import logging
-import socket
+import os
 
 from airflow import settings
 import airflow
@@ -88,7 +88,7 @@ dag = DAG(
 # ----------------------------
 # Logic builder 
 # ----------------------------
-def clean_missing_dags(**context) -> None:
+def clean_missing_dags() -> None:
     """
     Clears the missing dags from DAG table.
     """
@@ -138,6 +138,5 @@ def clean_missing_dags(**context) -> None:
 clear_missing_dags = PythonOperator(
     task_id='clean_missing_dags',
     python_callable=clean_missing_dags,
-    provide_context=True,
     dag=dag
 ) 
